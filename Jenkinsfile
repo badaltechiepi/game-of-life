@@ -1,18 +1,18 @@
 node('gol')
 {
     properties([pipelineTriggers([cron('* * * * 1-5')])])
-    stages('VCM'){
+    stage('VCM'){
         git url: 'https://github.com/badaltechiepi/game-of-life.git',
         branch: 'scripted'
     }
-    stages('build'){
+    stage('build'){
         sh 'mvn clean package'
     }
-    stages('testreport')
+    stage('testreport')
     {
         junit testResults: 'gameoflife-web/target/surefire-reports/*.xml'
     }
-    stages('artifectarvhice')
+    stage('artifectarvhice')
     {
         archiveArtifacts artifacts: 'gameoflife-web/target/*.war'
     }
