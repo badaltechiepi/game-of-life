@@ -1,4 +1,4 @@
-node('gol'){
+node('gol&&spec' ){
     stage('git'){
         git 'https://github.com/badaltechiepi/game-of-life.git'
     }
