@@ -1,9 +1,15 @@
 pipeline
 {
-    triggers{cron('H/30 * * * 1-5')}
     agent
     {
         label 'gol'
+    }
+    triggers{cron('H/30 * * * 1-5')}
+    parameters
+    {
+       string(name: 'testresult', defaultValue: 'gameoflife-web/target/surefire-reports/*.xml', description: 'test result to be shown')
+       string(name: 'artifect', defaultValue: 'gameoflife-web/target/*.war', description: 'artifect')
+       choice(name: 'branch', choices: ['declarative', 'scripted', 'master'], description: 'githubrepo')
     }
     stages
     {
@@ -13,7 +19,7 @@ pipeline
             {
                 echo "checkout the github repo"
                 git url: 'https://github.com/badaltechiepi/game-of-life.git',
-                branch: 'declarative'
+                branch: "${params.branch}"
             }
         }
         stage('build')
@@ -29,7 +35,7 @@ pipeline
             steps
             {
                  echo "test report"
-                 junit 'gameoflife-web/target/surefire-reports/*.xml'
+                 junit "${params.testresult}"
              }
 
         }
@@ -38,7 +44,7 @@ pipeline
             steps
             {
                  echo "archive"
-                 archiveArtifacts artifacts: 'gameoflife-web/target/*.war'
+                 archiveArtifacts artifacts: "${params.artifect}"
              }
 
         }   
