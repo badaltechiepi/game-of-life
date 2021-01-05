@@ -1,14 +1,19 @@
-node('gol&&spec' ){
-    stage('git'){
-        git 'https://github.com/badaltechiepi/game-of-life.git'
+node('gol')
+{
+    properties([pipelineTriggers([cron('* * * * 1-5')])])
+    stages('VCM'){
+        git url: 'https://github.com/badaltechiepi/game-of-life.git',
+        branch: 'scripted'
     }
-    stage('build'){
-         sh 'mvn clean package'
+    stages('build'){
+        sh 'mvn clean package'
     }
-    stage('test'){
-        junit 'gameoflife-web/target/surefire-reports/*.xml'
+    stages('testreport')
+    {
+        junit testResults: 'gameoflife-web/target/surefire-reports/*.xml'
     }
-    stage('artifact'){
+    stages('artifectarvhice')
+    {
         archiveArtifacts artifacts: 'gameoflife-web/target/*.war'
     }
 }
