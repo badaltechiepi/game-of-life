@@ -1,15 +1,18 @@
 node('gol')
 {
     def inputs = null
+    properties ([parameters([choice(choices: ['master', 'scripted', 'declarative'], description: 'choice the branch', name: 'Branch_name'), 
+                            string(defaultValue: 'gameoflife-web/target/surefire-reports/*.xml', description: 'test result', name: 'testresult'), 
+                            string(defaultValue: 'gameoflife-web/target/*.war', description: 'artifact', name: 'artifact')])])
     stage('select)
     {
-        inputs = input message: 'enter and select the branch'
+        inputs = input message: 'enter and select the branch',
         parameters: [string(defaultValue: '', description: 'Enter the branch', name: 'BRANCH_NAME'),
                      choice(choices: 'DEBUG\nRELEASE', description: 'BUILD Type', name: 'BUILD_TYPE')]
     }
     stage('VCM'){
         git url: 'https://github.com/badaltechiepi/game-of-life.git',
-        branch: 'scripted'
+        branch: "${params.Branch_name}"
     }
     stage('build'){
         if(inputs.BUILD_TYPE == 'DEBUG'){
