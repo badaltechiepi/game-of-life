@@ -1,0 +1,33 @@
+node('gol')
+{
+    def inputs = null
+    stage('select)
+    {
+        inputs = input message: 'enter and select the branch'
+        parameters: [string(defaultValue: '', description: 'Enter the branch', name: 'BRANCH_NAME'),
+                     choice(choices: 'DEBUG\nRELEASE', description: 'BUILD Type', name: 'BUILD_TYPE')]
+    }
+    stage('VCM'){
+        git url: 'https://github.com/badaltechiepi/game-of-life.git',
+        branch: 'scripted'
+    }
+    stage('build'){
+        if(inputs.BUILD_TYPE == 'DEBUG'){
+
+        sh 'mvn clean compile'
+        }
+        if(inputs.BUILD_TYPE == 'RELEASE'){
+
+        sh 'mvn clean package'
+        }
+
+    }
+    stage('testreport')
+    {
+        junit testResults: "${params.testresult}"
+    }
+    stage('artifectarvhice')
+    {
+        archiveArtifacts artifacts: "${params.artifact}"
+    }
+}
