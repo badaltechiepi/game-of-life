@@ -9,7 +9,7 @@ node('master') {
         }
 
         stage('git') {
-            git 'https://github.com/dummyrepos/game-of-life.git'
+            git 'https://github.com/badaltechiepi/game-of-life.git'
         }
         stage('build') {
             if (responses.BUILD_TYPE == 'DEBUG'){
@@ -37,10 +37,4 @@ node('master') {
     catch(err) {
         currentBuild.result = 'FAILURE'
     }
-    finally {
-        mail to: 'devops@learningthoughts.in', 
-             subject: "Status of the build: ${currentBuild.fullDisplayName}",
-             body: "${env.BUILD_URL} has ${currentBuild.result}"
-    }
-    
 }
