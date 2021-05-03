@@ -1,35 +1,3 @@
-Skip to content
-Search or jump to…
-
-Pull requests
-Issues
-Marketplace
-Explore
- 
-@badaltechiepi 
-badaltechiepi
-/
-game-of-life
-forked from wakaleo/game-of-life
-0
-016.1k
-Code
-Pull requests
-Actions
-Projects
-Wiki
-Security
-Insights
-Settings
-game-of-life/pom.xml
-@badaltechiepi
-badaltechiepi Update pom.xml
-Latest commit 326a1d3 4 minutes ago
- History
- 3 contributors
-@wakaleo@GeraldScott@badaltechiepi
-509 lines (496 sloc)  22 KB
-  
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
